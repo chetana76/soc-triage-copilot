@@ -1,0 +1,6 @@
+langgraph>=0.2.40
+langgraph-checkpoint-sqlite>=2.0.0
+cvss>=3.0
+openai>=1.30
+requests>=2.31
+python-dotenv>=1.0
