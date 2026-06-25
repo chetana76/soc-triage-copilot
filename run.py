@@ -17,7 +17,8 @@ from langgraph.types import Command
 from src.graph import build_graph
 from src.llm import llm_was_used
 
-DATA = os.path.join(os.path.dirname(__file__), "data", "alerts.json")
+DATA = os.getenv("ALERTS_FILE") or os.path.join(
+    os.path.dirname(__file__), "data", "alerts.json")
 
 
 def load_alert(alert_id):

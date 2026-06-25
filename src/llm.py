@@ -23,6 +23,14 @@ def chat(system: str, user: str, max_tokens: int = 400) -> str:
         from openai import OpenAI
 
         client = OpenAI(api_key=config.NEBIUS_API_KEY, base_url=config.NEBIUS_BASE_URL)
+        # LangSmith: wrap so this Nebius call (latency + token usage) nests inside
+        # the LangGraph trace. No-op when tracing is off; degrades gracefully if
+        # langsmith isn't installed yet.
+        try:
+            from langsmith.wrappers import wrap_openai
+            client = wrap_openai(client)
+        except Exception:
+            pass
         resp = client.chat.completions.create(
             model=config.NEBIUS_MODEL,
             messages=[
